@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เข้าสู่ระบบ - ตรวจสอบเครื่องปั่นไฟ</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-gray-100 text-gray-900 flex flex-col items-center justify-center h-screen">
+
+  <div class="bg-white p-6 rounded-lg shadow-md text-center">
+    <h1 class="text-2xl font-bold mb-4">เข้าสู่ระบบ</h1>
+
+    <button onclick="window.location.href='user.html'" class="bg-green-600 text-white px-4 py-2 rounded mb-4">
+      🟩 เข้าสู่ระบบด้วย QR Code
+    </button>
+
+    <form onsubmit="return loginAdmin()" class="space-y-2">
+      <input type="password" id="adminPassword" placeholder="🔐 รหัสผ่านผู้ดูแลระบบ"
+             class="border px-3 py-2 rounded w-full" required />
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full">
+        เข้าสู่ระบบผู้ดูแลระบบ
+      </button>
+    </form>
+  </div>
+
+  <script>
+    function loginAdmin() {
+      const password = document.getElementById("adminPassword").value;
+      if (password === "admin123") {
+        window.location.href = "admin.html";
+      } else {
+        alert("รหัสผ่านไม่ถูกต้อง");
+      }
+      return false;
+    }
+  </script>
+
+</body>
+</html>

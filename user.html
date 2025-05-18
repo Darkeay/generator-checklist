@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ตรวจสอบเครื่องปั่นไฟ - ผู้ใช้งาน</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-gray-100 text-gray-900 p-4">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-xl">
+    <h1 class="text-2xl font-bold mb-4">ฟอร์มตรวจสอบเครื่องปั่นไฟ รพ.แม่สรวย</h1>
+    <form id="checklistForm" class="space-y-4">
+      <div>
+        <label class="block">แรงดันไฟฟ้าเฟส R</label>
+        <input type="number" name="voltageR" class="w-full border p-2 rounded" required />
+      </div>
+      <div>
+        <label class="block">แรงดันไฟฟ้าเฟส S</label>
+        <input type="number" name="voltageS" class="w-full border p-2 rounded" required />
+      </div>
+      <div>
+        <label class="block">แรงดันไฟฟ้าเฟส T</label>
+        <input type="number" name="voltageT" class="w-full border p-2 rounded" required />
+      </div>
+      <div>
+        <label class="block">สถานะเครื่อง</label>
+        <select name="status" class="w-full border p-2 rounded">
+          <option value="ทำงาน">ทำงาน</option>
+          <option value="หยุด">หยุด</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-1 gap-2">
+        <label><input type="checkbox" name="oil" /> น้ำมันเครื่อง - ตรวจระดับและคุณภาพน้ำมัน</label>
+        <label><input type="checkbox" name="coolant" /> น้ำหล่อเย็น - ตรวจระดับและรอยรั่ว</label>
+        <label><input type="checkbox" name="battery" /> แบตเตอรี่ - ตรวจแรงดันและสภาพขั้วแบตเตอรี่</label>
+      </div>
+      <div>
+        <label class="block">เวลาเริ่ม</label>
+        <input type="time" name="startTime" class="w-full border p-2 rounded" required />
+      </div>
+      <div>
+        <label class="block">เวลาหยุด</label>
+        <input type="time" name="stopTime" class="w-full border p-2 rounded" required />
+      </div>
+      <div>
+        <label class="block">หมายเหตุ</label>
+        <textarea name="note" class="w-full border p-2 rounded"></textarea>
+      </div>
+      <div>
+        <label class="block">แนบรูปภาพหน้างาน</label>
+        <input type="file" name="photo" accept="image/*" class="w-full border p-2 rounded" />
+      </div>
+      <div>
+        <label class="block">รายชื่อผู้ตรวจสอบ</label>
+        <input type="text" name="inspector" class="w-full border p-2 rounded" required />
+      </div>
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">บันทึกข้อมูล</button>
+    </form>
+  </div>
+</body>
+</html>

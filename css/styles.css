@@ -1,0 +1,19 @@
+body {
+  font-family: sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+.dark {
+  background-color: #1a202c;
+  color: white;
+}
+@media print {
+  .no-print {
+    display: none;
+  }
+  body {
+    background: white;
+    color: black;
+    font-size: 14pt;
+    margin: 2cm;
+  }
+}
