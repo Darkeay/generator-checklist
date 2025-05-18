@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generator Checklist</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    input, select, textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
+    label { font-weight: bold; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+  <script>
+    function saveData(e) {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        r: document.getElementById('r').value,
+        s: document.getElementById('s').value,
+        t: document.getElementById('t').value,
+        status: document.getElementById('status').value,
+        oil: document.getElementById('oil').checked,
+        coolant: document.getElementById('coolant').checked,
+        battery: document.getElementById('battery').checked,
+        start: document.getElementById('start').value,
+        stop: document.getElementById('stop').value,
+        note: document.getElementById('note').value,
+        timestamp: new Date().toISOString()
+      };
+
+      let records = JSON.parse(localStorage.getItem('generator_records') || '[]');
+      records.push(data);
+      localStorage.setItem('generator_records', JSON.stringify(records));
+
+      alert("บันทึกข้อมูลเรียบร้อยแล้ว");
+      document.getElementById('form').reset();
+    }
+  </script>
+</head>
+<body>
+  <h1>Generator Inspection Checklist</h1>
+  <form id="form" onsubmit="saveData(event)">
+    <label>ชื่อช่าง</label>
+    <input type="text" id="name" placeholder="ระบุชื่อผู้ตรวจสอบ" required/>
+
+    <label>แรงดันเฟส R</label>
+    <input type="number" id="r" placeholder="เช่น 230" />
+
+    <label>แรงดันเฟส S</label>
+    <input type="number" id="s" placeholder="เช่น 230" />
+
+    <label>แรงดันเฟส T</label>
+    <input type="number" id="t" placeholder="เช่น 230" />
+
+    <label>สถานะเครื่อง</label>
+    <select id="status">
+      <option>ทำงาน</option>
+      <option>หยุด</option>
+    </select>
+
+    <fieldset>
+      <legend><strong>ตรวจสอบ</strong></legend>
+      <label><input type="checkbox" id="oil" /> น้ำมันเครื่อง</label><br/>
+      <label><input type="checkbox" id="coolant" /> น้ำหล่อเย็น</label><br/>
+      <label><input type="checkbox" id="battery" /> แบตเตอรี่</label>
+    </fieldset>
+
+    <label>เวลาเริ่มเดินเครื่อง</label>
+    <input type="time" id="start" />
+
+    <label>เวลาหยุดเครื่อง</label>
+    <input type="time" id="stop" />
+
+    <label>หมายเหตุ</label>
+    <textarea id="note" rows="4"></textarea>
+
+    <button type="submit">บันทึก</button>
+    <a href="records.html">ดูรายการย้อนหลัง</a>
+  </form>
+</body>
+</html>
