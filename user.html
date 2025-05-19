@@ -1,1 +1,79 @@
-<!DOCTYPE html><html><head><title>User</title></head><body><h1>ฟอร์มตรวจสอบเครื่องปั่นไฟ</h1></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body { font-family: sans-serif; padding: 20px; background: #f4f4f4; max-width: 600px; margin: auto; }
+      h2 { color: #007BFF; text-align: center; }
+      label { display: block; margin-top: 12px; }
+      input, textarea, select { width: 100%; padding: 8px; margin-top: 4px; }
+      button { margin-top: 20px; padding: 10px; width: 100%; background: #28a745; color: white; border: none; border-radius: 4px; font-size: 16px; }
+      button:hover { background-color: #218838; }
+      .link-report { text-align: center; margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+    <h2>ฟอร์มตรวจสอบเครื่องปั่นไฟ</h2>
+
+    <label>หัวข้อ:</label>
+    <select id="item">
+      <option>วาล์วควบคุม</option>
+      <option>ถังสำรอง</option>
+      <option>ระบบท่อ</option>
+      <option>เครื่องดับเพลิง</option>
+      <option>พัดลมระบายอากาศ</option>
+    </select>
+
+    <label>สถานะ:</label>
+    <select id="status">
+      <option value="ผ่าน">✔️ ผ่าน</option>
+      <option value="ไม่ผ่าน">❌ ไม่ผ่าน</option>
+      <option value="ต้องซ่อม">⚠️ ต้องซ่อม</option>
+    </select>
+
+    <label>หมายเหตุ:</label>
+    <textarea id="comment"></textarea>
+
+    <label>แนบรูปภาพ:</label>
+    <input type="file" id="imageFile" accept="image/*" capture="environment">
+
+    <button onclick="submitForm()">📤 ส่งข้อมูล</button>
+    <p id="response"></p>
+
+    <div class="link-report">
+      <a href="?page=report" target="_blank">📄 ดูรายงานย้อนหลัง</a>
+    </div>
+
+    <script>
+      function submitForm() {
+        const item = document.getElementById("item").value;
+        const status = document.getElementById("status").value;
+        const comment = document.getElementById("comment").value;
+        const fileInput = document.getElementById("imageFile");
+        const file = fileInput.files[0];
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            const base64 = reader.result.split(",")[1];
+            google.script.run.withSuccessHandler(url => {
+              sendData(item, status, comment, url);
+            }).uploadImage({ name: file.name, type: file.type, base64 });
+          };
+          reader.readAsDataURL(file);
+        } else {
+          sendData(item, status, comment, "ไม่มีรูป");
+        }
+      }
+
+      function sendData(item, status, comment, imageUrl) {
+        google.script.run.withSuccessHandler(msg => {
+          document.getElementById("response").textContent = msg;
+          document.getElementById("comment").value = "";
+          document.getElementById("imageFile").value = null;
+        }).saveChecklist({ item, status, comment, imageUrl });
+      }
+    </script>
+  </body>
+</html>
